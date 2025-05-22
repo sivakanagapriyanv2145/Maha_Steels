@@ -24,16 +24,18 @@ export default function CustomLabBar() {
         elevation: 5,
         position: "absolute",
         bottom: 0,
-        left: -20,
-        right: 5,
+        
+        
         paddingRight:20,
-        width: Dimensions.get("window").width, // Ensures full width
+      
+        width:"100%" 
       }}
     >
       <TouchableOpacity onPress={()=>router.push('/getQuotation')}  style={{ alignItems: "center", flex: 1 }}>
       <FontAwesome5 name="microscope" size={20} color="black" />
         <Text>Lab</Text>
       </TouchableOpacity>
+      
 
      
     </View>

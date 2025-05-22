@@ -19,7 +19,7 @@ export default function Quotation() {
     try {
       
       const response = await axios.post(
-        "http:// 10.1.70.237:4000/mahalakshmisteels/quote",
+        "http://10.1.74.238:4000/mahalakshmisteels/quote",
         {
           name: name,
           mobile: phoneNumber,
