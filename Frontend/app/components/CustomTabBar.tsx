@@ -1,7 +1,9 @@
 import { View, TouchableOpacity, Text, Dimensions } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { useRouter } from "expo-router";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+
 
 export default function CustomLabBar() {
   const router = useRouter();
@@ -32,9 +34,12 @@ export default function CustomLabBar() {
       }}
     >
       <TouchableOpacity onPress={()=>router.push('/getQuotation')}  style={{ alignItems: "center", flex: 1 }}>
-      <FontAwesome5 name="microscope" size={20} color="black" />
-        <Text>Lab</Text>
+     <FontAwesome5 name="newspaper" size={24} color="black" />
+        <Text>Quotations</Text>
+        
       </TouchableOpacity>
+      <TouchableOpacity style={{ alignItems: "center", flex: 1 }}><MaterialIcons name="sell" size={24} color="black" />
+      <Text>Sell</Text></TouchableOpacity>
       
 
      
