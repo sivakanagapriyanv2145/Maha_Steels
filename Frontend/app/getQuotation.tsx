@@ -8,7 +8,7 @@ export default function GetQuotation() {
   const [quotations, setQuotations] = useState([]);
 
   useEffect(() => {
-    axios.get("http:// 10.1.70.237:4000/mahalakshmisteels/getquote")
+    axios.get("http://10.1.70.237:4000/mahalakshmisteels/getquote")
       .then(response => {
         const sortedQuotations = response.data.sort((a, b) => new Date(b.date) - new Date(a.date)); // Sorting by date in descending order
         setQuotations(sortedQuotations);

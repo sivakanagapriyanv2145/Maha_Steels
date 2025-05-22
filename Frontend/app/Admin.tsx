@@ -20,10 +20,26 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [flag, setFlag] = useState(false);
-  const handlesubmit = async () => {
-  //   
-   router.push("/getQuotation");
-  }
+     const handlesubmit = async() => {
+      try {
+        const response = await axios.post("http://10.1.74.238:4000/mahalakshmisteels/admin/login", {
+          
+          email: email,
+          password: password
+        });
+        
+        
+        console.log(response);
+      
+        router.push("/getQuotation");
+        
+        
+      } catch (error) {
+        console.log(error);
+        setFlag(true);
+
+      }
+    }
 
   return (
     <View style={styles.container}>
