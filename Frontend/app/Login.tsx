@@ -19,7 +19,7 @@ export default function Login() {
     const [flag,setFlag]=useState(false);
     const handlesubmit = async() => {
       try {
-        const response = await axios.post("http://10.1.70.237:4000/mahalakshmisteels/auth/login", {
+        const response = await axios.post("http://10.1.74.238:4000/mahalakshmisteels/auth/login", {
           
           email: email,
           password: password
