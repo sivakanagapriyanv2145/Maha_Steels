@@ -5,6 +5,8 @@ const connectDB=require("./db/connectDB.js");
 const authRoute=require("./routes/auth.route.js");
 const quote=require("./routes/quotation.route.js");
 const adminRoute=require("./routes/admin.route.js");
+const selllist=require("./routes/sell.route.js")
+const scrapdetails=require("./routes/scrap.route.js")
 const cors = require('cors');
 
 const app=express();
@@ -14,6 +16,8 @@ app.use(express.json());
 app.use("/mahalakshmisteels/auth",authRoute)
 app.use("/mahalakshmisteels/admin",adminRoute);
 app.use("/mahalakshmisteels",quote);
+app.use("/mahalakshmisteels/sell",selllist);
+app.use("/mahalakshmisteels/scrap",scrapdetails)
 app.listen(PORT,()=>{
     console.log(`Server is running ${PORT}`);
     connectDB();

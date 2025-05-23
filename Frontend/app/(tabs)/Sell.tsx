@@ -5,59 +5,42 @@ import PhoneInput from "react-native-phone-number-input";
 import { Dropdown } from "react-native-element-dropdown";
 import axios from "axios";
 
-export default function Quotation() {
+export default function Sell() {
   const phoneInput = useRef(null);
   const [key, setKey] = useState(0);
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [selectedProject, setSelectedProject] = useState("");
-  const [selectSteel, setSelectedSteel] = useState("");
+ 
   const [quantity, setQuantity] = useState("");
   const [location, setLocation] = useState("");
-  const [notes, setNotes] = useState("");
+
   const handleSubmit = async () => {
     try {
       
       const response = await axios.post(
-        "http://10.1.74.238:4000/mahalakshmisteels/quote",
+        "http://10.1.74.238:4000/mahalakshmisteels/sell/post",
         {
           name: name,
           mobile: phoneNumber,
-          projectType: selectedProject,
-          materials: selectSteel,
           quantity: quantity,
           location: location,
-          notes: notes,
+         
         }
       );
       setName("");
       setPhoneNumber("");
-      setSelectedProject("");
-      setSelectedSteel("");
+      
       setQuantity("");
       setLocation("");
-      setNotes("");
+     
       setKey((prev) => prev + 1);
-      Alert.alert("Quotation Sent", "We will contact you soon 👍");
+      Alert.alert("Sell Sent", "We will contact you soon 👍");
       console.log("Superb", response);
     } catch (error) {
       console.log("error", error);
     }
   };
-  const project = [
-    { label: "Residential", value: "residential" },
-    { label: "Commercial", value: "commercial" },
-    { label: "Industrial", value: "industrial" },
-    { label: "Infrastructure", value: "infrastructure" },
-    { label: "Institutional", value: "institutional" },
-  ];
-  const steelTypes = [
-    { label: "Carbon Steel", value: "carbon" },
-    { label: "Alloy Steel", value: "alloy" },
-    { label: "Stainless Steel", value: "stainless" },
-    { label: "Tool Steel", value: "tool" },
-    { label: "Galvanized Steel", value: "galvanized" },
-  ];
+  
   return (
     <ScrollView>
       <View style={{ padding: 20 }}>
@@ -110,50 +93,8 @@ export default function Quotation() {
             }}
           />
 
-          {/* <Dropdown
-            data={project}
-            labelField="label"
-            valueField="value"
-            placeholder="Select Project Type"
-            value={selectedProject}
-            onChange={(item) => {
-              setSelectedProject(item.value);
-            }}
-            style={{
-              height: 50,
-              borderColor: "gray",
-              borderWidth: 1,
-              borderRadius: 5,
-              paddingLeft: 10,
-
-              marginTop: 25,
-            }}
-            containerStyle={{
-              width: "100%",
-            }}
-          /> */}
-          <Dropdown
-            data={steelTypes}
-            labelField="label"
-            valueField="value"
-            placeholder="Select Steel"
-            value={selectSteel}
-            onChange={(item) => {
-              setSelectedSteel(item.value);
-            }}
-            style={{
-              height: 50,
-              borderColor: "gray",
-              borderWidth: 1,
-              borderRadius: 5,
-              paddingLeft: 10,
-
-              marginTop: 25,
-            }}
-            containerStyle={{
-              width: "100%",
-            }}
-          />
+        
+         
           <TextInput
             style={{ marginTop: 20, backgroundColor: "white" }}
             mode="outlined"
@@ -168,13 +109,7 @@ export default function Quotation() {
             value={location}
             label="Location"
           />
-          <TextInput
-            style={{ marginTop: 20, backgroundColor: "white", height: 70 }}
-            mode="outlined"
-            onChangeText={(text) => setNotes(text)}
-            value={notes}
-            label="Price"
-          />
+          
           <Button
             style={{ marginTop: 40, borderRadius: 10, backgroundColor: "gray" }}
             mode="contained"

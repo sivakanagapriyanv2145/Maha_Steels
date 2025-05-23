@@ -1,83 +1,83 @@
 import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { Pressable } from 'react-native';
+import { Tabs } from 'expo-router';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import { Pressable, Alert } from 'react-native';
+import { useRouter } from 'expo-router';
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
-import Toast from "react-native-toast-message";
-import AntDesign from '@expo/vector-icons/AntDesign';
-
-
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
-}
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    Alert.alert('Logout', 'Are you sure you want to logout?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Logout',
+        onPress: () => {
+          
+          router.replace('/Login'); 
+        },
+        style: 'destructive',
+      },
+    ]);
+  };
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "blue",      // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
+        tabBarActiveTintColor: "darkblue",
         headerShown: useClientOnlyValue(false, true),
-      }}>
+        headerStyle: {
+          backgroundColor: '#2c3e50',
+        },
+        headerTintColor: 'white',
+        headerRight: () => (
+          <Pressable onPress={handleLogout} style={{ marginRight: 15 }}>
+            <MaterialIcons name="logout" size={24} color="white" />
+          </Pressable>
+        ),
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
           title: 'Scrap',
-          tabBarIcon: ({ color }) =><MaterialIcons name="factory" size={24} color="black" />,
-          headerStyle: {
-            backgroundColor: '#2c3e50'
-
-          },
-          headerTintColor: 'white'
+          tabBarIcon: ({ color }) => <MaterialIcons name="factory" size={24} color="black" />,
         }}
       />
-     <Tabs.Screen
+      <Tabs.Screen
         name="two"
         options={{
           title: 'Calculator',
           tabBarIcon: ({ color }) => <AntDesign name="calculator" size={24} color="black" />,
-          headerStyle: {
-            backgroundColor: '#2c3e50'
-
-          },
-          headerTintColor: 'white'
         }}
       />
-        <Tabs.Screen
+      <Tabs.Screen
         name="Quotation"
         options={{
           title: 'Quotation',
           tabBarIcon: ({ color }) => <MaterialIcons name="request-quote" size={24} color="black" />,
-          headerStyle: {
-            backgroundColor: '#2c3e50'
-
-          },
-          headerTintColor: 'white'
         }}
       />
-      
-        <Tabs.Screen
+      <Tabs.Screen
         name="Sell"
         options={{
           title: 'Sell',
           tabBarIcon: ({ color }) => <MaterialIcons name="sell" size={24} color="black" />,
-          headerStyle: {
-            backgroundColor: '#2c3e50'
-
-          },
-          headerTintColor: 'white',
         }}
       />
-       
-    </Tabs> 
+      <Tabs.Screen
+        name="SteelPrice"
+        options={{
+          title: 'Price',
+          tabBarIcon: ({ color }) => <MaterialIcons name="price-check" size={24} color="black" />,
+        }}
+      />
+    </Tabs>
   );
 }

@@ -1,18 +1,9 @@
-import { StatusBar } from "expo-status-bar";
-import {
-  Platform,
-  StyleSheet,
-  TouchableOpacity,
-  Button,
-  Image,
-} from "react-native";
+import { StyleSheet, TouchableOpacity, Image } from "react-native";
 import { useState } from "react";
 import MS from "../assets/images/MS.jpg";
-import EditScreenInfo from "@/components/EditScreenInfo";
 import { Text, View } from "@/components/Themed";
 import { useRouter } from "expo-router";
 import { TextInput } from "react-native-paper";
-
 import axios from "axios";
 
 export default function Login() {
@@ -20,26 +11,25 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [flag, setFlag] = useState(false);
-     const handlesubmit = async() => {
-      try {
-        const response = await axios.post("http://10.1.74.238:4000/mahalakshmisteels/admin/login", {
-        
-          email: email,
-          password: password
-        });
-        
-        
-        console.log(response);
-      
-        router.push("/getQuotation");
-        
-        
-      } catch (error) {
-        console.log(error);
-        setFlag(true);
+  const [showPassword, setShowPassword] = useState(false); // 👁️ toggle state
 
-      }
+  const handlesubmit = async () => {
+    try {
+      const response = await axios.post(
+        "http://192.168.109.140:4000/mahalakshmisteels/admin/login",
+        {
+          email: email,
+          password: password,
+        }
+      );
+
+      console.log(response);
+      router.push("/getQuotation");
+    } catch (error) {
+      console.log(error);
+      setFlag(true);
     }
+  };
 
   return (
     <View style={styles.container}>
@@ -48,40 +38,45 @@ export default function Login() {
         style={{ width: 150, height: 150, marginBottom: 20 }}
       />
       <Text style={{ fontSize: 20 }}>Admin Login</Text>
+
       <TextInput
         onChangeText={(e) => setEmail(e)}
         style={styles.input}
         label="Email"
+        value={email}
         error={flag}
+        mode="outlined"
         underlineColor="transparent"
         activeUnderlineColor="transparent"
-        mode="outlined"
+        right={<TextInput.Icon icon="email" />}
       />
 
       <TextInput
         onChangeText={(e) => setPassword(e)}
         style={styles.input}
         label="Password"
-        secureTextEntry={true}
+        value={password}
         error={flag}
+        secureTextEntry={!showPassword}
+        mode="outlined"
         underlineColor="transparent"
         activeUnderlineColor="transparent"
-        mode="outlined"
+        right={
+          <TextInput.Icon
+            icon={showPassword ? "eye-off" : "eye"}
+            onPress={() => setShowPassword(!showPassword)}
+          />
+        }
       />
+
       {flag && (
-        <Text style={{ color: "red", marginTop: 10 }}>Invalid Credentials</Text>
+        <Text style={{ color: "red", marginTop: 10 }}>
+          Invalid Credentials
+        </Text>
       )}
 
       <TouchableOpacity
-        style={{
-          backgroundColor: "gray",
-          width: "80%",
-          height: 40,
-          justifyContent: "center",
-          alignItems: "center",
-          borderRadius: 5,
-          marginTop: 20,
-        }}
+        style={styles.button}
         onPress={handlesubmit}
       >
         <Text style={{ color: "#fff" }}>Login</Text>
@@ -99,8 +94,15 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "80%",
-    height: 40,
     backgroundColor: "white",
+    marginTop: 20,
+  },
+  button: {
+    backgroundColor: "gray",
+    width: "80%",
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 5,
     marginTop: 20,
   },

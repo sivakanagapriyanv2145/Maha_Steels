@@ -38,9 +38,13 @@ export default function CustomLabBar() {
         <Text>Quotations</Text>
         
       </TouchableOpacity>
-      <TouchableOpacity style={{ alignItems: "center", flex: 1 }}><MaterialIcons name="sell" size={24} color="black" />
+      <TouchableOpacity onPress={()=>router.replace('/getSell')} style={{ alignItems: "center", flex: 1 }}><MaterialIcons name="sell" size={24} color="black" />
       <Text>Sell</Text></TouchableOpacity>
-      
+      <TouchableOpacity onPress={()=>router.push('/postScrap')} style={{ alignItems: "center", flex: 1 }}><FontAwesome5 name="drum-steelpan" size={24} color="black" />
+      <Text>Scrap</Text></TouchableOpacity>
+       <TouchableOpacity onPress={()=>router.push('/ListScrap')} style={{ alignItems: "center", flex: 1 }}><FontAwesome5 name="drum-steelpan" size={24} color="black" />
+      <Text>Scrap List</Text></TouchableOpacity>
+
 
      
     </View>

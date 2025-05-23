@@ -8,7 +8,7 @@ export default function GetQuotation() {
   const [quotations, setQuotations] = useState([]);
 
   useEffect(() => {
-    axios.get("http://192.168.109.140:4000/mahalakshmisteels/getquote")
+    axios.get("http://192.168.109.140:4000/mahalakshmisteels/sell/getsell")
       .then(response => {
         const sortedQuotations = response.data.sort((a, b) => new Date(b.date) - new Date(a.date)); // Sorting by date in descending order
         setQuotations(sortedQuotations);
@@ -19,7 +19,7 @@ export default function GetQuotation() {
   return (
     <View style={styles.screen}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Text style={styles.header}>Client Quotations</Text>
+        <Text style={styles.header}>Client Sell</Text>
         {quotations.length > 0 ? (
           quotations.map((quote, index) => (
             <View key={index} style={styles.card}>
@@ -35,14 +35,7 @@ export default function GetQuotation() {
                 </Text>
               </View>
 
-              <View style={styles.infoBox}>
-                <Text style={styles.label}>Project Type:</Text>
-                <Text style={styles.value}>{quote.projectType}</Text>
-              </View>
-              <View style={styles.infoBox}>
-                <Text style={styles.label}>Steel Type:</Text>
-                <Text style={styles.value}>{quote.materials}</Text>
-              </View>
+             
               <View style={styles.infoBox}>
                 <Text style={styles.label}>Quantity:</Text>
                 <Text style={styles.value}>{quote.quantity}</Text>
@@ -51,12 +44,7 @@ export default function GetQuotation() {
                 <Text style={styles.label}>Location:</Text>
                 <Text style={styles.value}>{quote.location}</Text>
               </View>
-              {quote.notes?.trim().length > 0 && (
-                <View style={styles.infoBox}>
-                  <Text style={styles.label}>Notes:</Text>
-                  <Text style={styles.value}>{quote.notes}</Text>
-                </View>
-              )}
+            
             </View>
           ))
         ) : (

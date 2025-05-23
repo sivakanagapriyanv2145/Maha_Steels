@@ -5,20 +5,20 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import { Pressable, Alert } from 'react-native';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { useRouter } from 'expo-router';
 
 import { useColorScheme } from '@/components/useColorScheme';
 
 export {
-  // Catch any errors thrown by the Layout component.
   ErrorBoundary,
 } from 'expo-router';
 
 export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
   initialRouteName: '(tabs)',
 };
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -27,7 +27,6 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
   }, [error]);
@@ -47,31 +46,96 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    Alert.alert('Logout', 'Are you sure you want to logout?', [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Logout',
+        style: 'destructive',
+        onPress: () => {
+          // TODO: Clear storage/session here if needed
+          router.replace('/Login'); // Navigate back to login
+        },
+      },
+    ]);
+  };
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack initialRouteName="Login">
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen 
-  name="getQuotation" 
-  options={{ 
-    headerShown: true, 
-    title: "Customer Quotation" , headerStyle: {
-      backgroundColor: '#2c3e50'
 
-    },
-    headerTintColor: 'white',
-  }} 
-/>
-
+        <Stack.Screen
+          name="getQuotation"
+          options={{
+            headerShown: true,
+            title: 'Customer Quotation',
+            headerStyle: {
+              backgroundColor: '#2c3e50',
+            },
+            headerTintColor: 'white',
+            headerRight: () => (
+              <Pressable onPress={handleLogout} style={{ marginRight: 15 }}>
+                <MaterialIcons name="logout" size={24} color="white" />
+              </Pressable>
+            ),
+          }}
+        />
+         <Stack.Screen
+          name="getSell"
+          options={{
+            headerShown: true,
+            title: 'Customer Sell',
+            headerStyle: {
+              backgroundColor: '#2c3e50',
+            },
+            headerTintColor: 'white',
+            headerRight: () => (
+              <Pressable onPress={handleLogout} style={{ marginRight: 15 }}>
+                <MaterialIcons name="logout" size={24} color="white" />
+              </Pressable>
+            ),
+          }}
+        />
+         <Stack.Screen
+          name="postScrap"
+          options={{
+            headerShown: true,
+            title: 'Scrap post',
+            headerStyle: {
+              backgroundColor: '#2c3e50',
+            },
+            headerTintColor: 'white',
+            headerRight: () => (
+              <Pressable onPress={handleLogout} style={{ marginRight: 15 }}>
+                <MaterialIcons name="logout" size={24} color="white" />
+              </Pressable>
+            ),
+          }}
+        />
+         <Stack.Screen
+          name="ListScrap"
+          options={{
+            headerShown: true,
+            title: 'Scrap details',
+            headerStyle: {
+              backgroundColor: '#2c3e50',
+            },
+            headerTintColor: 'white',
+            headerRight: () => (
+              <Pressable onPress={handleLogout} style={{ marginRight: 15 }}>
+                <MaterialIcons name="logout" size={24} color="white" />
+              </Pressable>
+            ),
+          }}
+        />
+        
 
         <Stack.Screen name="Login" options={{ headerShown: false }} />
         <Stack.Screen name="Admin" options={{ headerShown: false }} />
         <Stack.Screen name="Signup" options={{ headerShown: false }} />
-      
-   
-   
-        
       </Stack>
     </ThemeProvider>
   );
